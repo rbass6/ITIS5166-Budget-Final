@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for budget app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbass6/ITIS5166-Budget-Final.git"
+  },
+  "author": "Ryan Bass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rbass6/ITIS5166-Budget-Final/issues"
+  },
+  "homepage": "https://github.com/rbass6/ITIS5166-Budget-Final#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
