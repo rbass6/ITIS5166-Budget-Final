@@ -10,7 +10,7 @@ export default function Navibar({loggedIn}) {
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand href="/">
-          <i class="bi bi-piggy-bank-fill"></i>
+          <i className="bi bi-piggy-bank-fill"></i>
             BudgetBFF
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

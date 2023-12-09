@@ -1,12 +1,15 @@
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import './Register.css';
 import { useState } from 'react';
+import axios from 'axios';
+import './Register.css';
 
 export default function Register({setLoggedIn, setShowRegister}) {
 
   const [validated, setValidated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
@@ -15,16 +18,35 @@ export default function Register({setLoggedIn, setShowRegister}) {
   }
 
   function handleSubmit(event) {
+    event.preventDefault();
+
     const form = event.currentTarget;
 
     if (password1 !== password2 || form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
     setValidated(true);
-
     
+    registerUser();
+  }
+
+  function registerUser() {
+    axios.post('http://localhost:3000/api/register', {
+      email: email,
+      username: username,
+      password: password1
+    })
+    .then((response) => {
+      const token = response.data;
+      console.log(token);
+      document.cookie = `token=${token}`;
+      setLoggedIn(true);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   return (
@@ -37,7 +59,9 @@ export default function Register({setLoggedIn, setShowRegister}) {
             <Form.Control 
               required
               type="email" 
-              placeholder="Enter email" 
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Please enter an email.
@@ -49,7 +73,9 @@ export default function Register({setLoggedIn, setShowRegister}) {
             <Form.Control 
               required
               type="text" 
-              placeholder="Enter username" 
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
               Please enter a username.
