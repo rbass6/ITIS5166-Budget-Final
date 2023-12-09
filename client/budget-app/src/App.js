@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import Register from "./components/Register/Register";
 import Container from "react-bootstrap/Container";
 import Navibar from "./components/Navibar/Navibar";
-import Login from "./components/Login/Login";
+import Home from './components/Home/Home';
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <Container fluid className="app-container">
         <Navibar />
-        <Login />
+        <Home />
       </Container>
     </div>
   );
