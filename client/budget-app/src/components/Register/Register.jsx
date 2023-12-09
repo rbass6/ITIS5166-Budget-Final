@@ -13,13 +13,23 @@ export default function Register({setLoggedIn, setShowRegister}) {
     <div className="register">
       <Container className="w-50">
         <h1>Register</h1>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="registerEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="registerUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Enter username" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="registerPassword1">
           <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="registerPassword2">
+          <Form.Label>Re-enter password</Form.Label>
           <Form.Control type="password" placeholder="Password" />
         </Form.Group>
 

@@ -1,10 +1,11 @@
 .register {
-  margin-top: 20%;
+  margin-top: 10%;
 }
 
 .register-button-group {
   display: flex;
   justify-content: space-evenly;
+  margin-top: 3rem;
 }
 
 .register-button-group button {
