@@ -125,6 +125,7 @@ app.post('/api/login/', (req, res) => {
   });
 });
 
+
 /* 
  * /api/entry/ - Creates a new entry in the database
  */

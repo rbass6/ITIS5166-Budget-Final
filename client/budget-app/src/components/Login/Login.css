@@ -1,3 +1,12 @@
 .login {
   margin-top: 20%;
 }
+
+.login-button-group {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.login-button-group button {
+  width: 30%;
+}
