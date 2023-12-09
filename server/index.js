@@ -64,11 +64,22 @@ app.get('/api/entries/', authenticateToken, (req, res) => {
  * /api/register/ - Registers a new user
  */
 app.post('/api/register/', (req, res) => {
+  const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
 
-  if (email === undefined || password === undefined) {
-    res.status(400).end("Email or password not provided");
+  if (username === undefined) {
+    res.status(400).end("Username not provided");
+    return;
+  }
+
+  if (email === undefined) {
+    res.status(400).end("Email not provided");
+    return;
+  }
+
+  if (password === undefined) {
+    res.status(400).end("Password not provided");
     return;
   }
 
@@ -81,6 +92,7 @@ app.post('/api/register/', (req, res) => {
     }
 
     User.create({
+      username: username,
       email: email,
       password: encryptedPassword
     }).then(() => {
