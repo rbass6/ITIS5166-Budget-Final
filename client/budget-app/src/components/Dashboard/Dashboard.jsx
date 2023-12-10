@@ -9,6 +9,7 @@ export default function Dashboard() {
 
   const [showBudgets, setShowBudgets] = useState(false);
   const [entries, setEntries] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     axios.get('http://localhost:3000/api/entries/', {
@@ -20,7 +21,7 @@ export default function Dashboard() {
     }).catch((error) => {
       console.log(error);
     });
-  }, []);
+  }, [reload]);
 
   function handleBudgets() {
     setShowBudgets(true);
@@ -35,7 +36,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard-budgets-container">
       { showBudgets ? (
-        <Budgets setShowBudgets={setShowBudgets} entries={entries}/>
+        <Budgets setShowBudgets={setShowBudgets} entries={entries} reload={reload} setReload={setReload}/>
       ) : (
         <div className="dashboard">
           <Container className="dashboard-container">

@@ -5,9 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import axios from 'axios';
 import './Budgets.css';
 
-export default function Budgets({setShowBudgets, entries}) {
+export default function Budgets({setShowBudgets, entries, reload, setReload}) {
 
   const [showEntry, setShowEntry] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -37,11 +38,36 @@ export default function Budgets({setShowBudgets, entries}) {
     }
 
     createEntry();
+
     handleClose();
+    setValidated(false);
+    setTimeout(1000);
+    setTitle("");
+    setBudget("");
   }
 
   function createEntry() {
+    axios.post('http://localhost:3000/api/entry/', 
+    {
+      title: title,
+      budget: budget
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${getCookie('token')}`
+      }
+    }).then(() => {
+      // Cause the useEffect in Dashboard.jsx to run again and reload the entries
+      setReload(!reload);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
   return (
@@ -84,7 +110,6 @@ export default function Budgets({setShowBudgets, entries}) {
             <Modal.Title>Add Budget Entry</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            
               <Row>
                 <Col>
                   <Form.Group className="mb-3" controlId="entryTitle">
