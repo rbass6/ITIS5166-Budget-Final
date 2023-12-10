@@ -99,8 +99,8 @@ export default function Budgets({setShowBudgets, entries, reload, setReload}) {
           ))
         }
         <div className="budgets-button-container">
-          <Button className="budget-add-button" onClick={handleEntry}>Add Entry</Button>
           <Button className="budget-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
+          <Button className="budget-add-button" onClick={handleEntry}>Add Entry</Button>
         </div>
       </Container>
 
