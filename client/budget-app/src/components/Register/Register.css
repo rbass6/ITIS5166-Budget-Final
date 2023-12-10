@@ -2,6 +2,10 @@
   margin-top: 10%;
 }
 
+.register h1 {
+  text-align: center;
+}
+
 .register-button-group {
   display: flex;
   justify-content: space-evenly;
