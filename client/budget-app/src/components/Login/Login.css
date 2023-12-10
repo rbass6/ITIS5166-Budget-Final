@@ -11,3 +11,8 @@
 .login-button-group button {
   width: 30%;
 }
+
+.login-server-error {
+  font-style: italic;
+  color: #dc3545;
+}

@@ -11,3 +11,8 @@
 .register-button-group button {
   width: 30%;
 }
+
+.register-server-error {
+  font-style: italic;
+  color: #dc3545;
+}

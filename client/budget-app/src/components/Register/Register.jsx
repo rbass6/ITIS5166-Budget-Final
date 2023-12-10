@@ -12,6 +12,7 @@ export default function Register({setLoggedIn, setShowRegister}) {
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [serverError, setServerError] = useState("");
 
   function handleRegister() {
     setShowRegister(false);
@@ -19,16 +20,15 @@ export default function Register({setLoggedIn, setShowRegister}) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
     const form = event.currentTarget;
+
+    setValidated(true);
 
     if (password1 !== password2 || form.checkValidity() === false) {
       event.stopPropagation();
       return;
     }
 
-    setValidated(true);
-    
     registerUser();
   }
 
@@ -37,14 +37,14 @@ export default function Register({setLoggedIn, setShowRegister}) {
       email: email,
       username: username,
       password: password1
-    })
-    .then((response) => {
+    }).then((response) => {
       const token = response.data;
       document.cookie = `token=${token}`;
       setLoggedIn(true);
-    })
-    .catch((error) => {
+
+    }).catch((error) => {
       console.log(error);
+      setServerError("Error while registering: " + error.response.data);
     });
   }
 
@@ -117,10 +117,15 @@ export default function Register({setLoggedIn, setShowRegister}) {
             </Form.Control.Feedback>
           </Form.Group>
 
+          <div className="register-server-error">
+            <p>{serverError}</p>
+          </div>
+
           <div className="register-button-group">
             <Button variant="secondary" type="button" onClick={handleRegister}>Login</Button>
             <Button variant="primary" type="submit">Submit</Button>
           </div>
+
         </Form>
       </Container>
     </div>
