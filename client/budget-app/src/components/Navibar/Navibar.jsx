@@ -16,7 +16,7 @@ export default function Navibar({loggedIn, setLoggedIn}) {
     <div className="navibar">
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand>
           <i className="bi bi-piggy-bank-fill"></i>
             BudgetBFF
           </Navbar.Brand>
@@ -25,9 +25,8 @@ export default function Navibar({loggedIn, setLoggedIn}) {
             {
               loggedIn ? (
                 <Nav className="me-auto">
-                  <Nav.Link href="#home">Home</Nav.Link>
-                  <Nav.Link href="#dashboard">Dashboard</Nav.Link>
-                  <Nav.Link href="#expenses">Expenses</Nav.Link>
+                  <Nav.Link>Dashboard</Nav.Link>
+                  <Nav.Link>Expenses</Nav.Link>
                 </Nav>
               ) : (
                 <i>

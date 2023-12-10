@@ -1,0 +1,12 @@
+.budgets-container {
+  text-align: center;
+}
+
+.budgets-container h1 {
+  font-size: 3rem;
+}
+
+.budget-add-button, .budget-dashboard-button {
+  margin: 2rem;
+  font-size: 1.5rem;
+}
