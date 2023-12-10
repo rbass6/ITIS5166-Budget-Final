@@ -2,16 +2,46 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal'
+import Form from 'react-bootstrap/Form';
+import { useState } from 'react';
 import './Budgets.css';
 
 export default function Budgets({setShowBudgets, entries}) {
 
+  const [showEntry, setShowEntry] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [title, setTitle] = useState("");
+  const [budget, setBudget] = useState("");
+
+  const handleClose = () => setShowEntry(false);
+  const handleShow = () => setShowEntry(true);
+
   function handleEntry() {
-    
+    handleShow();
   }
 
   function handleDashboard() {
     setShowBudgets(false);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    
+    setValidated(true);
+
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      return;
+    }
+
+    createEntry();
+    handleClose();
+  }
+
+  function createEntry() {
+
   }
 
   return (
@@ -46,8 +76,58 @@ export default function Budgets({setShowBudgets, entries}) {
           <Button className="budget-add-button" onClick={handleEntry}>Add Entry</Button>
           <Button className="budget-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
         </div>
-        
       </Container>
+
+      <Modal show={showEntry} onHide={handleClose} centered>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Budget Entry</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            
+              <Row>
+                <Col>
+                  <Form.Group className="mb-3" controlId="entryTitle">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      required
+                      type="text" 
+                      placeholder="Food"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)} 
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter a title.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group className="mb-3" controlId="entryAmount">
+                    <Form.Label>Amount</Form.Label>
+                    <Form.Control
+                      required 
+                      type="text" 
+                      placeholder="200"
+                      value={budget}
+                      onChange={(e) => setBudget(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter an amount.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Add Entry
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </div>
   );
 }
