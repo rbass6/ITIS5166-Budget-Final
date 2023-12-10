@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <Container fluid className="app-container">
-        <Navibar loggedIn={loggedIn}/>
+        <Navibar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         <Home loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       </Container>
     </div>

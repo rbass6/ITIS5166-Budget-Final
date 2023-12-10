@@ -40,7 +40,6 @@ export default function Register({setLoggedIn, setShowRegister}) {
     })
     .then((response) => {
       const token = response.data;
-      console.log(token);
       document.cookie = `token=${token}`;
       setLoggedIn(true);
     })
