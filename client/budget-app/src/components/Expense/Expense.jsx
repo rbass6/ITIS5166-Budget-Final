@@ -11,13 +11,14 @@ import './Expense.css';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
-export default function Expense({ selectedEntry, setSelectedEntry, expenses, entries, reloadExpenses, setReloadExpenses }) {
+export default function Expense({ selectedEntry, setSelectedEntry, expenses, entries, reloadEntries, setReloadEntries }) {
 
   const [showExpense, setExpense] = useState(false);
   const [validated, setValidated] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [amount, setAmount] = useState("");
   const [serverError, setServerError] = useState("");
+  const [loadFirstEntry, setLoadFirstEntry] = useState(true);
   const navigate = useNavigate();
 
   const handleClose = () => setExpense(false);
@@ -25,10 +26,11 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
 
   // Set selected entry to first entry in list
   useEffect(() => {
-    if(entries.length > 0){
+    if(loadFirstEntry && entries.length > 0){
       setSelectedEntry(entries[0]._id)
+      setLoadFirstEntry(false)
     }
-  }, [entries, setSelectedEntry])
+  }, [entries, setSelectedEntry, loadFirstEntry])
 
   function handleDashboard() {
     navigate("/dashboard")
@@ -49,7 +51,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
   }
 
   function createExpense() {
-    
+
     axios.post('http://localhost:3000/api/expense/', 
     {
       amount: amount,
@@ -68,8 +70,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
         setStartDate(new Date());
         setAmount("");
         setServerError("");
-        setSelectedEntry(entries[0]._id);
-
+        setReloadEntries(!reloadEntries);
     }).catch((error) => {
       console.log(error.response.data);
       setServerError("Error while adding expense: " + error.response.data);
@@ -82,23 +83,73 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
+  function getEntryFromExpense(expense) {
+    const foundEntry = entries.find((entry) => entry._id === expense.entryId);
+
+    if (foundEntry === undefined) {
+      return "Entry not found";
+    }
+    
+    return foundEntry.title;
+  }
+
   return (
     <div className="expense">
       <Container className="expense-container">
-        <h1>Expense</h1>
-        <Row className="expense-label-row">
-          <Col className="category-col">
-            <h3>Expense Category</h3>
-          </Col>
-          <Col className="amount-col">
-            <h3>Expense Amount</h3>
-          </Col>
-        </Row>
-        <hr/>
-        <div className="expense-button-container">
-          <Button className="expense-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
-          <Button className="expense-add-button" onClick={handleShow}>Add Entry</Button>
-        </div>
+        <Form>
+          <h1>Expense</h1>
+          <Row>
+            <Col>
+              <Form.Select
+                aria-label="Select Expense Entry"
+                value={selectedEntry}
+                onChange={(e) => setSelectedEntry(e.target.value)}
+                size="lg"
+                className="expense-select"
+              >
+                {
+                  entries.map((entry) => (
+                    <option key={entry._id} value={entry._id}>{entry.title}</option>
+                  ))
+                }
+              </Form.Select>
+            </Col>
+          </Row>
+          <Row>
+          <Col className="title-col">
+              <h3>Budget Entry</h3>
+            </Col>
+            <Col className="amount-col">
+              <h3>Expense Amount</h3>
+            </Col>
+            <Col className="date-col">
+              <h3>Expense Date</h3>
+            </Col>
+          </Row>
+          <hr/>
+          {
+            expenses.map((expense) => (
+              <div key={expense._id}>
+                <Row>
+                  <Col>
+                    <h4>{getEntryFromExpense(expense)}</h4>
+                  </Col>
+                  <Col>
+                    <h4>${expense.amount}</h4>
+                  </Col>
+                  <Col>
+                    <h4>{expense.month + 1}/{expense.year}</h4>
+                  </Col>
+                </Row>
+                <hr/>
+              </div>
+            ))
+          }
+          <div className="expense-button-container">
+            <Button className="expense-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
+            <Button className="expense-add-button" onClick={handleShow}>Add Entry</Button>
+          </div>
+        </Form>
       </Container>
 
       <Modal show={showExpense} onHide={handleClose} centered>

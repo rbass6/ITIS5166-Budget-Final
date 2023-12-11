@@ -6,6 +6,10 @@
   font-size: 3rem;
 }
 
+.expense-select {
+  margin: 2rem;
+}
+
 .expense-label-row {
   margin-top: 2rem;
 }

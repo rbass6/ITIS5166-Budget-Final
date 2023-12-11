@@ -17,7 +17,6 @@ export default function Dashboard({loggedIn}) {
   const [expenses, setExpenses] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("");
   const [reloadEntries, setReloadEntries] = useState(false);
-  const [reloadExpenses, setReloadExpenses] = useState(false);
 
   // Get entries
   useEffect(() => {
@@ -40,7 +39,6 @@ export default function Dashboard({loggedIn}) {
           'Authorization': `Bearer ${getCookie('token')}`
         }
       }).then((response) => {
-        console.log(response.data)
         setExpenses(response.data);
       }).catch((error) => {
         console.log(error);
@@ -71,8 +69,8 @@ export default function Dashboard({loggedIn}) {
             setSelectedEntry={setSelectedEntry} 
             expenses={expenses}
             entries={entries}
-            reloadExpenses={reloadExpenses} 
-            setReloadExpenses={setReloadExpenses}/>
+            reloadEntries={reloadEntries} 
+            setReloadEntries={setReloadEntries}/>
         }/>
       </Routes>
     </div>
