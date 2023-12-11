@@ -6,12 +6,16 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
 import './Expense.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Expense() {
 
   const [showExpense, setExpense] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [amount, setAmount] = useState("");
   const navigate = useNavigate();
 
   const handleClose = () => setExpense(false);
@@ -72,13 +76,42 @@ export default function Expense() {
           <Modal.Body>
               <Row>
                 <Col>
+                  <Form.Group className="mb-3" controlId="expenseEntry">
+                    <Form.Label>Select Budget Entry</Form.Label>
+                    <Form.Select aria-label="Select Budget Entry">
+                      <option>Food</option>
+                      <option>Gas</option>
+                      <option>Entertainment</option>
+                      <option>Other</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
                   <Form.Group className="mb-3" controlId="expenseCalendar">
                     <Form.Label>Calendar</Form.Label>
+                    <DatePicker
+                      dateFormat="MMMM yyyy"
+                      showMonthYearPicker
+                      onChange={(date) => setStartDate(date)} 
+                      selected={startDate}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group className="mb-3" controlId="expenseAmount">
                     <Form.Label>Amount</Form.Label>
+                    <Form.Control
+                      required 
+                      type="text" 
+                      placeholder="200"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter an amount.
+                    </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
               </Row>
