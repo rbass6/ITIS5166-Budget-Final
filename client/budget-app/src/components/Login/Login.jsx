@@ -1,12 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 
-export default function Login({setLoggedIn}) {
+export default function Login({loggedIn, setLoggedIn}) {
 
   const [validated, setValidated] = useState(false); 
   const [email, setEmail] = useState("");
@@ -47,6 +47,20 @@ export default function Login({setLoggedIn}) {
       console.log(error);
       setServerError("Error while logging in: " + error.response.data);
     });
+  }
+
+  // Cover edge case where user isn't logged in but still has a token
+  useEffect(() => {
+    const token = getCookie("token");
+    if (token !== undefined && token !== "null" && !loggedIn) {
+      document.cookie = "token=null"
+    }
+  }, [loggedIn])
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
   return (

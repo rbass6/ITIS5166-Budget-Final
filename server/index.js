@@ -157,6 +157,14 @@ app.post('/api/login/', (req, res) => {
   });
 });
 
+/*
+ * /api/refresh/ - Refreshes a user's token
+ */
+app.post('/api/refresh/', authenticateToken, (req, res) => {
+  const email = req.user.email;
+  const token = generateAccessToken(email);
+  res.status(200).json(token);
+});
 
 /* 
  * /api/entry/ - Creates a new entry in the database
@@ -277,7 +285,7 @@ app.listen(port, () => {
 function generateAccessToken(email) {
   const token = jsonwebtoken.sign({
     email: email
-  }, process.env.JWT_TOKEN, { expiresIn: '10m' });
+  }, process.env.JWT_TOKEN, { expiresIn: '1m' });
 
   return token;
 }

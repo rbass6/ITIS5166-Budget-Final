@@ -62,10 +62,6 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
   }
 
   function getMixedData(entries, expenses, selectedEntry) {
-    console.log("Entries", entries)
-    console.log("Expenses", expenses)
-    console.log("Selected Entry", selectedEntry)
-
     let data = []
     data.push(["Month", "Expenses", "Budget"])
 
