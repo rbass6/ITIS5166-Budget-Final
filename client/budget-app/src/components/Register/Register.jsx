@@ -15,6 +15,7 @@ export default function Register({setLoggedIn}) {
   const [password2, setPassword2] = useState("");
   const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
+  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '138.197.112.207';
 
   function handleRegister() {
     navigate('/login');
@@ -35,7 +36,7 @@ export default function Register({setLoggedIn}) {
   }
 
   function registerUser() {
-    axios.post('http://localhost:3000/api/register', {
+    axios.post(`${url}/api/register/`, {
       email: email,
       username: username,
       password: password1

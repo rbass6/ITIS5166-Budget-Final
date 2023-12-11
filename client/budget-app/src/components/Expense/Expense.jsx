@@ -20,6 +20,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
   const [serverError, setServerError] = useState("");
   const [loadFirstEntry, setLoadFirstEntry] = useState(true);
   const navigate = useNavigate();
+  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '138.197.112.207';
 
   const handleClose = () => setExpense(false);
   const handleShow = () => setExpense(true);
@@ -52,7 +53,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
 
   function createExpense() {
 
-    axios.post('http://localhost:3000/api/expense/', 
+    axios.post(`${url}/api/expense/`, 
     {
       amount: amount,
       year: startDate.getFullYear(),

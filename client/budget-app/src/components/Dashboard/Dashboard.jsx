@@ -15,10 +15,11 @@ export default function Dashboard({loggedIn}) {
   const [expenses, setExpenses] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("");
   const [reloadEntries, setReloadEntries] = useState(false);
+  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '138.197.112.207';
 
   // Get entries
   useEffect(() => {
-    axios.get('http://localhost:3000/api/entries/', {
+    axios.get(`${url}/api/entries/`, {
       headers: {
         'Authorization': `Bearer ${getCookie('token')}`
       }
@@ -27,12 +28,12 @@ export default function Dashboard({loggedIn}) {
     }).catch((error) => {
       console.log(error);
     });
-  }, [reloadEntries]);
+  }, [reloadEntries, url]);
 
   // Get expenses from selected entry
   useEffect(() => {
     if (selectedEntry.length > 0) {
-      axios.get('http://localhost:3000/api/expenses/' + selectedEntry, {
+      axios.get(`${url}/api/expenses/` + selectedEntry, {
         headers: {
           'Authorization': `Bearer ${getCookie('token')}`
         }
@@ -42,7 +43,7 @@ export default function Dashboard({loggedIn}) {
         console.log(error);
       });
     }
-  }, [reloadEntries, selectedEntry]);
+  }, [reloadEntries, selectedEntry, url]);
 
   function getCookie(name) {
     const value = `; ${document.cookie}`;
