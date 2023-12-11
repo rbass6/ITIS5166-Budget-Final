@@ -15,6 +15,7 @@ export default function Dashboard({loggedIn}) {
   const [expenses, setExpenses] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("");
   const [reloadEntries, setReloadEntries] = useState(false);
+  const [loadFirstEntry, setLoadFirstEntry] = useState(true);
   const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
 
   // Get entries
@@ -45,6 +46,14 @@ export default function Dashboard({loggedIn}) {
     }
   }, [reloadEntries, selectedEntry, url]);
 
+  // Set selected entry to first entry in list
+  useEffect(() => {
+    if(loadFirstEntry && entries.length > 0){
+      setSelectedEntry(entries[0]._id)
+      setLoadFirstEntry(false)
+    }
+  }, [entries, setSelectedEntry, loadFirstEntry])
+
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -54,7 +63,14 @@ export default function Dashboard({loggedIn}) {
   return (
     <div className="dashboard-budget-container">
       <Routes>
-        <Route path="/" element={<DashboardHome entries={entries} expenses={expenses}/>} />
+        <Route path="/" element={
+          <DashboardHome 
+            entries={entries} 
+            expenses={expenses}
+            selectedEntry={selectedEntry} 
+            setSelectedEntry={setSelectedEntry} 
+          />
+        }/>
         <Route path="/budget" element={
           <Budget 
             entries={entries} 

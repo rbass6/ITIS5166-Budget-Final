@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import './Expense.css';
@@ -18,20 +18,11 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
   const [startDate, setStartDate] = useState(new Date());
   const [amount, setAmount] = useState("");
   const [serverError, setServerError] = useState("");
-  const [loadFirstEntry, setLoadFirstEntry] = useState(true);
   const navigate = useNavigate();
   const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
 
   const handleClose = () => setExpense(false);
   const handleShow = () => setExpense(true);
-
-  // Set selected entry to first entry in list
-  useEffect(() => {
-    if(loadFirstEntry && entries.length > 0){
-      setSelectedEntry(entries[0]._id)
-      setLoadFirstEntry(false)
-    }
-  }, [entries, setSelectedEntry, loadFirstEntry])
 
   function handleDashboard() {
     navigate("/dashboard")
