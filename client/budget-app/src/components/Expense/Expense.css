@@ -1,0 +1,16 @@
+.expense-container {
+  text-align: center;
+}
+
+.expense-container h1 {
+  font-size: 3rem;
+}
+
+.expense-label-row {
+  margin-top: 2rem;
+}
+
+.expense-add-button, .expense-dashboard-button {
+  margin: 2rem;
+  font-size: 1.2rem;
+}

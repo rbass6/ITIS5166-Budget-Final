@@ -1,4 +1,5 @@
 import Budget from '../Budget/Budget';
+import Expense from '../Expense/Expense';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
@@ -40,6 +41,7 @@ export default function Dashboard({loggedIn}) {
       <Routes>
         <Route path="/" element={<DashboardHome/>} />
         <Route path="/budget" element={<Budget entries={entries} reload={reload} setReload={setReload}/>} />
+        <Route path="/expense" element={<Expense/>} />
       </Routes>
     </div>
   );
