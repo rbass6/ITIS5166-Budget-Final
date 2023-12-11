@@ -10,6 +10,7 @@ import bcrpyt from "bcrypt";
 // Schemas
 import User from "./schemas/user.js";
 import Entry from "./schemas/entry.js";
+import Expense from "./schemas/expense.js";
 
 // Load environment variables
 dotenv.config();
@@ -52,6 +53,25 @@ app.get('/api/entries/', authenticateToken, (req, res) => {
       res.status(400).send(JSON.stringify(err));
     });
 
+  }).catch((err) => {
+    res.status(400).send(JSON.stringify(err));
+  });
+
+});
+
+/* 
+ * /api/expenses/:entry_id - Returns all expenses for a given entry
+ */
+app.get('/api/expenses/:entry_id', authenticateToken, (req, res) => {
+  const entryId = req.params.entry_id;
+
+  if (entryId === undefined) {
+    res.status(400).send("Entry ID not provided");
+    return;
+  }
+
+  Expense.find({entryId: new mongoose.Types.ObjectId(entryId)}).then((expenses) => {
+    res.status(200).send(expenses);
   }).catch((err) => {
     res.status(400).send(JSON.stringify(err));
   });
@@ -181,6 +201,69 @@ app.post('/api/entry/', authenticateToken, (req, res) => {
     res.status(400).send(JSON.stringify(err));
   });
   
+});
+
+
+/* 
+ * /api/expense/ - Creates a new entry in the database
+ */
+app.post('/api/expense/', authenticateToken, (req, res) => {
+  const amount = req.body.amount;
+  const year = req.body.year;
+  const month = req.body.month;
+  const entryId = req.body.entry_id;
+
+  if (amount === undefined) {
+    res.status(400).send("Amount not provided");
+    return;
+  }
+
+  if (year === undefined) {
+    res.status(400).send("Year not provided");
+    return;
+  }
+
+  if (month === undefined) {
+    res.status(400).send("Month not provided");
+    return;
+  }
+
+  if (entryId === undefined) {
+    res.status(400).send("Entry ID not provided");
+    return;
+  }
+
+  // Check if expense already exists
+  Expense.findOne({entryId: new mongoose.Types.ObjectId(entryId), year: year, month: month}).then((foundExpense) => {
+    if (foundExpense !== null) {
+      res.status(400).send("Expense already exists");
+      return;
+    }
+
+    // Create expense
+    Expense.create({
+      amount: amount,
+      year: year,
+      month: month,
+      entryId: new mongoose.Types.ObjectId(entryId)
+    }).then((expense) => {
+      
+      // Add expense to entry
+      Entry.findOne({_id: new mongoose.Types.ObjectId(entryId)}).then((entry) => {
+
+        entry.expenses.push(expense._id);
+        entry.save();
+        res.status(200).send("Expense created");
+
+      }).catch((err) => {
+        res.status(400).send(JSON.stringify(err));
+      });
+    }).catch((err) => {
+      res.status(400).send(JSON.stringify(err));
+    });
+  }).catch((err) => {
+    res.status(400).send(JSON.stringify(err));
+  });
 });
 
 // Start server ---------------------------------------------------------------
