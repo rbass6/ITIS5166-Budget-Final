@@ -7,9 +7,9 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import './Budgets.css';
+import './Budget.css';
 
-export default function Budgets({ entries, reload, setReload}) {
+export default function Budget({ entries, reload, setReload}) {
 
   const [showEntry, setShowEntry] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -73,10 +73,10 @@ export default function Budgets({ entries, reload, setReload}) {
   }
 
   return (
-    <div className="budgets">
-      <Container className="budgets-container">
-        <h1>Budgets</h1>
-        <Row className="budgets-label-row">
+    <div className="budget">
+      <Container className="budget-container">
+        <h1>Budget</h1>
+        <Row className="budget-label-row">
           <Col className="category-col">
             <h3>Budget Category</h3>
           </Col>
@@ -100,7 +100,7 @@ export default function Budgets({ entries, reload, setReload}) {
             </div>
           ))
         }
-        <div className="budgets-button-container">
+        <div className="budget-button-container">
           <Button className="budget-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
           <Button className="budget-add-button" onClick={handleEntry}>Add Entry</Button>
         </div>

@@ -1,12 +1,12 @@
-.budgets-container {
+.budget-container {
   text-align: center;
 }
 
-.budgets-container h1 {
+.budget-container h1 {
   font-size: 3rem;
 }
 
-.budgets-label-row {
+.budget-label-row {
   margin-top: 2rem;
 }
 

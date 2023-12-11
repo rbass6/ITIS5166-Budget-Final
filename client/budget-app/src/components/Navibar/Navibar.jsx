@@ -30,7 +30,7 @@ export default function Navibar({loggedIn, setLoggedIn}) {
               loggedIn ? (
                 <Nav className="me-auto">
                   <Link className="nav-link" to="/dashboard">Dashboard</Link>
-                  <Link className="nav-link" to="/dashboard/budgets">Budget</Link>
+                  <Link className="nav-link" to="/dashboard/budget">Budget</Link>
                 </Nav>
               ) : (
                 <i>
