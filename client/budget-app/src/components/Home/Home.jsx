@@ -1,30 +1,16 @@
-import Login from "../Login/Login";
-import Dashboard from "../Dashboard/Dashboard";
-import Register from "../Register/Register";
 import './Home.css';
-import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Navibar from '../Navibar/Navibar';
+import { Outlet } from "react-router-dom"
 
 export default function Home({loggedIn, setLoggedIn}) {
 
-  const [showRegister, setShowRegister] = useState(false);
-
   return (
     <div className="home">
-      {
-        loggedIn ? (
-          <Dashboard/>
-        ) : (
-          <>
-            {
-              showRegister ? (
-                <Register setLoggedIn={setLoggedIn} setShowRegister={setShowRegister}/>
-              ) : (
-                <Login setLoggedIn={setLoggedIn} setShowRegister={setShowRegister}/>
-              )
-            }
-          </>
-        )
-      }
+      <Container fluid className="app-container">
+        <Navibar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+        <Outlet />
+      </Container>
     </div>
   );
 }

@@ -2,10 +2,11 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
 
-export default function Register({setLoggedIn, setShowRegister}) {
+export default function Register({setLoggedIn}) {
 
   const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState("");
@@ -13,9 +14,10 @@ export default function Register({setLoggedIn, setShowRegister}) {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [serverError, setServerError] = useState("");
+  const navigate = useNavigate();
 
   function handleRegister() {
-    setShowRegister(false);
+    navigate('/login');
   }
 
   function handleSubmit(event) {
@@ -41,7 +43,7 @@ export default function Register({setLoggedIn, setShowRegister}) {
       const token = response.data;
       document.cookie = `token=${token}`;
       setLoggedIn(true);
-
+      navigate('/dashboard')
     }).catch((error) => {
       console.log(error);
       setServerError("Error while registering: " + error.response.data);

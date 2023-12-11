@@ -2,14 +2,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Navibar.css';
 
 export default function Navibar({loggedIn, setLoggedIn}) {
 
+  const navigate = useNavigate();
+
  function handleLogout() {
     document.cookie = "token=null"
     setLoggedIn(false);
+    navigate('/login');
  }
   
   return (
@@ -17,7 +21,7 @@ export default function Navibar({loggedIn, setLoggedIn}) {
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>
-          <i className="bi bi-piggy-bank-fill"></i>
+            <i className="bi bi-piggy-bank-fill"></i>
             BudgetBFF
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -25,8 +29,8 @@ export default function Navibar({loggedIn, setLoggedIn}) {
             {
               loggedIn ? (
                 <Nav className="me-auto">
-                  <Nav.Link>Dashboard</Nav.Link>
-                  <Nav.Link>Expenses</Nav.Link>
+                  <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                  <Link className="nav-link" to="/dashboard/budgets">Budget</Link>
                 </Nav>
               ) : (
                 <i>

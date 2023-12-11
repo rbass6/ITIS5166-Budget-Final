@@ -6,14 +6,16 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import './Budgets.css';
 
-export default function Budgets({setShowBudgets, entries, reload, setReload}) {
+export default function Budgets({ entries, reload, setReload}) {
 
   const [showEntry, setShowEntry] = useState(false);
   const [validated, setValidated] = useState(false);
   const [title, setTitle] = useState("");
   const [budget, setBudget] = useState("");
+  const navigate = useNavigate();
 
   const handleClose = () => setShowEntry(false);
   const handleShow = () => setShowEntry(true);
@@ -23,7 +25,7 @@ export default function Budgets({setShowBudgets, entries, reload, setReload}) {
   }
 
   function handleDashboard() {
-    setShowBudgets(false);
+    navigate("/dashboard")
   }
 
   function handleSubmit(event) {
