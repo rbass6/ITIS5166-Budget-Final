@@ -15,7 +15,7 @@ export default function Budget({ entries, reloadEntries, setReloadEntries}) {
   const [validated, setValidated] = useState(false);
   const [title, setTitle] = useState("");
   const [budget, setBudget] = useState("");
-  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '138.197.112.207';
+  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
   const navigate = useNavigate();
 
   const handleClose = () => setShowEntry(false);

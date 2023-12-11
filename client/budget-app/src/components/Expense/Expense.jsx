@@ -20,7 +20,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
   const [serverError, setServerError] = useState("");
   const [loadFirstEntry, setLoadFirstEntry] = useState(true);
   const navigate = useNavigate();
-  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '138.197.112.207';
+  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '';
 
   const handleClose = () => setExpense(false);
   const handleShow = () => setExpense(true);
@@ -100,7 +100,8 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
         <Form>
           <h1>Expense</h1>
           <Row>
-            <Col>
+            <Col className="budget-entry-col">
+              <Form.Label>Select Budget Entry</Form.Label>
               <Form.Select
                 aria-label="Select Expense Entry"
                 value={selectedEntry}
@@ -110,7 +111,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
               >
                 {
                   entries.map((entry) => (
-                    <option key={entry._id} value={entry._id}>{entry.title}</option>
+                    <option key={entry._id} value={entry._id}>{entry.title} - ${entry.budget}</option>
                   ))
                 }
               </Form.Select>
@@ -170,7 +171,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
                     >
                       {
                         entries.map((entry) => (
-                          <option key={entry._id} value={entry._id}>{entry.title}</option>
+                          <option key={entry._id} value={entry._id}>{entry.title} - ${entry.budget}</option>
                         ))
                       }
                     </Form.Select>
