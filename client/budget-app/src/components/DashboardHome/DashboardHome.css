@@ -1,0 +1,17 @@
+.dashboard-container {
+  text-align: center;
+}
+
+.dashboard-container h1 {
+  font-size: 3rem;
+}
+
+.bi-cash-coin {
+  font-size: 15vw;
+}
+
+.dashboard-budget-button, .dashboard-expenses-button {
+  margin: 3rem;
+  font-size: 1.2rem;
+  padding: 1rem 1.5rem;
+}

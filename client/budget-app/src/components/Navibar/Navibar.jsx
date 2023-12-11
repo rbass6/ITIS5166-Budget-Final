@@ -31,7 +31,7 @@ export default function Navibar({loggedIn, setLoggedIn}) {
                 <Nav className="me-auto">
                   <Link className="nav-link" to="/dashboard">Dashboard</Link>
                   <Link className="nav-link" to="/dashboard/budget">Budget</Link>
-                  <Link className="nav-link" to="/dashboard/expense">Expense</Link>
+                  <Link className="nav-link" to="/dashboard/expense">Expenses</Link>
                 </Nav>
               ) : (
                 <i>

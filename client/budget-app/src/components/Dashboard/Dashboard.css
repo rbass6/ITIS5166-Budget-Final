@@ -1,20 +1,3 @@
 .dashboard-budget-container {
   margin-top: 5%;
 }
-
-.dashboard-container {
-  text-align: center;
-}
-
-.dashboard-container h1 {
-  font-size: 3rem;
-}
-
-.bi-cash-coin {
-  font-size: 15vw;
-}
-
-.dashboard-budget-button {
-  margin-top: 2rem;
-  font-size: 1.2rem;
-}
