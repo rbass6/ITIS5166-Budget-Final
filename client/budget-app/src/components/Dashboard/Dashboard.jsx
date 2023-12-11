@@ -14,8 +14,12 @@ import './Dashboard.css';
 export default function Dashboard({loggedIn}) {
   
   const [entries, setEntries] = useState([]);
-  const [reload, setReload] = useState(false);
+  const [expenses, setExpenses] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState("");
+  const [reloadEntries, setReloadEntries] = useState(false);
+  const [reloadExpenses, setReloadExpenses] = useState(false);
 
+  // Get entries
   useEffect(() => {
     axios.get('http://localhost:3000/api/entries/', {
       headers: {
@@ -26,9 +30,23 @@ export default function Dashboard({loggedIn}) {
     }).catch((error) => {
       console.log(error);
     });
-  }, [reload]);
+  }, [reloadEntries]);
 
-
+  // Get expenses from selected entry
+  useEffect(() => {
+    if (selectedEntry.length > 0) {
+      axios.get('http://localhost:3000/api/expenses/' + selectedEntry, {
+        headers: {
+          'Authorization': `Bearer ${getCookie('token')}`
+        }
+      }).then((response) => {
+        console.log(response.data)
+        setExpenses(response.data);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }, [reloadEntries, selectedEntry]);
 
   function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -40,8 +58,22 @@ export default function Dashboard({loggedIn}) {
     <div className="dashboard-budget-container">
       <Routes>
         <Route path="/" element={<DashboardHome/>} />
-        <Route path="/budget" element={<Budget entries={entries} reload={reload} setReload={setReload}/>} />
-        <Route path="/expense" element={<Expense/>} />
+        <Route path="/budget" element={
+          <Budget 
+            entries={entries} 
+            reloadEntries={reloadEntries} 
+            setReloadEntries={setReloadEntries}
+          />
+        }/>
+        <Route path="/expense" element={
+          <Expense 
+            selectedEntry={selectedEntry} 
+            setSelectedEntry={setSelectedEntry} 
+            expenses={expenses}
+            entries={entries}
+            reloadExpenses={reloadExpenses} 
+            setReloadExpenses={setReloadExpenses}/>
+        }/>
       </Routes>
     </div>
   );

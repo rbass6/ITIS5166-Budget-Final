@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import './Budget.css';
 
-export default function Budget({ entries, reload, setReload}) {
+export default function Budget({ entries, reloadEntries, setReloadEntries}) {
 
   const [showEntry, setShowEntry] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -60,7 +60,7 @@ export default function Budget({ entries, reload, setReload}) {
       }
     }).then(() => {
       // Cause the useEffect in Dashboard.jsx to run again and reload the entries
-      setReload(!reload);
+      setReloadEntries(!reloadEntries);
     }).catch((error) => {
       console.log(error);
     });

@@ -4,22 +4,31 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import './Expense.css';
 import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios';
 
-export default function Expense() {
+export default function Expense({ selectedEntry, setSelectedEntry, expenses, entries, reloadExpenses, setReloadExpenses }) {
 
   const [showExpense, setExpense] = useState(false);
   const [validated, setValidated] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [amount, setAmount] = useState("");
+  const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
 
   const handleClose = () => setExpense(false);
   const handleShow = () => setExpense(true);
+
+  // Set selected entry to first entry in list
+  useEffect(() => {
+    if(entries.length > 0){
+      setSelectedEntry(entries[0]._id)
+    }
+  }, [entries, setSelectedEntry])
 
   function handleDashboard() {
     navigate("/dashboard")
@@ -36,17 +45,41 @@ export default function Expense() {
       return;
     }
 
-    createEntry();
-
-    handleClose();
-    setValidated(false);
-    setTimeout(1000);
-    // setTitle("");
-    // setBudget("");
+    createExpense();
   }
 
-  function createEntry() {
+  function createExpense() {
+    
+    axios.post('http://localhost:3000/api/expense/', 
+    {
+      amount: amount,
+      year: startDate.getFullYear(),
+      month: startDate.getMonth(),
+      entry_id: selectedEntry
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${getCookie('token')}`
+      }
+    }).then(() => {
+        handleClose();
+        setValidated(false);
+        setTimeout(1000);
+        setStartDate(new Date());
+        setAmount("");
+        setServerError("");
+        setSelectedEntry(entries[0]._id);
 
+    }).catch((error) => {
+      console.log(error.response.data);
+      setServerError("Error while adding expense: " + error.response.data);
+    });
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
   return (
@@ -78,11 +111,16 @@ export default function Expense() {
                 <Col>
                   <Form.Group className="mb-3" controlId="expenseEntry">
                     <Form.Label>Select Budget Entry</Form.Label>
-                    <Form.Select aria-label="Select Budget Entry">
-                      <option>Food</option>
-                      <option>Gas</option>
-                      <option>Entertainment</option>
-                      <option>Other</option>
+                    <Form.Select 
+                      aria-label="Select Budget Entry"
+                      value={selectedEntry}
+                      onChange={(e) => setSelectedEntry(e.target.value)}
+                    >
+                      {
+                        entries.map((entry) => (
+                          <option key={entry._id} value={entry._id}>{entry.title}</option>
+                        ))
+                      }
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -115,6 +153,9 @@ export default function Expense() {
                   </Form.Group>
                 </Col>
               </Row>
+              <div className="expense-server-error">
+                <p>{serverError}</p>
+              </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
