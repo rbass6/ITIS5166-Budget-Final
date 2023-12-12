@@ -1,0 +1,16 @@
+.home-default {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.bi-wallet2 {
+  font-size: 10rem;
+}
+
+.home-login-button, .home-register-button {
+  margin: 3rem;
+  font-size: 1.2rem;
+  padding: 1rem 1.5rem;
+}
