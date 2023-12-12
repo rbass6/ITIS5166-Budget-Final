@@ -101,8 +101,8 @@ export default function Login({loggedIn, setLoggedIn}) {
           </div>
 
           <div className="login-button-group">
-            <Button variant="secondary" type="button" onClick={handleRegister}>Register</Button>
-            <Button variant="primary" type="submit">Submit</Button>
+            <Button aria-label="Register" variant="secondary" type="button" onClick={handleRegister}>Register</Button>
+            <Button aria-label="Submit" variant="primary" type="submit">Submit</Button>
           </div>
         </Form>
       </Container>

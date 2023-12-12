@@ -102,8 +102,8 @@ export default function Budget({ entries, reloadEntries, setReloadEntries}) {
           ))
         }
         <div className="budget-button-container">
-          <Button className="budget-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
-          <Button className="budget-add-button" onClick={handleEntry}>Add Entry</Button>
+          <Button aria-label="Dashboard" className="budget-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
+          <Button aria-label="Add Entry" className="budget-add-button" onClick={handleEntry}>Add Entry</Button>
         </div>
       </Container>
 
@@ -147,10 +147,10 @@ export default function Budget({ entries, reloadEntries, setReloadEntries}) {
               </Row>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button aria-label="Close" variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit">
+            <Button aria-label="Add Entry" variant="primary" type="submit">
               Add Entry
             </Button>
           </Modal.Footer>

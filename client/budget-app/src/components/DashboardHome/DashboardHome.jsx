@@ -122,17 +122,17 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
           entries.length === 0
           ?
           <>
-            <i className="bi bi-cash-coin"></i>
+            <i className="bi bi-cash-coin" title="Cash & coin"></i>
             <h3>It looks like you don't have a budget set up. Create one here.</h3>
-            <Button className="dashboard-budget-button" onClick={handleBudget}>Budget</Button>              
+            <Button aria-label="Budget" className="dashboard-budget-button" onClick={handleBudget}>Budget</Button>              
           </>
           :
           expenses.length === 0
           ?
           <>
-            <i className="bi bi-cash-coin"></i>
+            <i className="bi bi-cash-coin" title="Cash & coin"></i>
             <h3>It looks like you don't have any expenses set up. Add them here.</h3>
-            <Button className="dashboard-expenses-button" onClick={handleExpenses}>Expenses</Button>       
+            <Button aria-label="Expenses" className="dashboard-expenses-button" onClick={handleExpenses}>Expenses</Button>       
           </>
           :
           <>

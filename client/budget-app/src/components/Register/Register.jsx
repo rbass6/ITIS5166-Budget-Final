@@ -125,8 +125,8 @@ export default function Register({setLoggedIn}) {
           </div>
 
           <div className="register-button-group">
-            <Button variant="secondary" type="button" onClick={handleRegister}>Login</Button>
-            <Button variant="primary" type="submit">Submit</Button>
+            <Button aria-label="Login" variant="secondary" type="button" onClick={handleRegister}>Login</Button>
+            <Button aria-label="Submit" variant="primary" type="submit">Submit</Button>
           </div>
 
         </Form>

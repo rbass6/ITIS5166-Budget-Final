@@ -59,12 +59,12 @@ export default function Home({loggedIn, setLoggedIn, showLogoutWarning, setShowL
         {
           !loggedIn && showIntro && (
             <div className="home-default">
-              <i class="bi bi-wallet2"></i>
+              <i class="bi bi-wallet2" title="Wallet"></i>
               <h3>Budget BFF</h3>
               <h4><i>"Your best friend for budgeting!"</i></h4>
               <div className="home-button-container">
-                <Button variant="primary" className="home-login-button" onClick={handleLogin}>Login</Button>
-                <Button variant="primary" className="home-register-button" onClick={handleRegister}>Register</Button>
+                <Button aria-label="Login" variant="primary" className="home-login-button" onClick={handleLogin}>Login</Button>
+                <Button aria-label="Register" variant="primary" className="home-register-button" onClick={handleRegister}>Register</Button>
               </div>
             </div>
           )
@@ -77,10 +77,10 @@ export default function Home({loggedIn, setLoggedIn, showLogoutWarning, setShowL
         </Modal.Header>
         <Modal.Body>You will be logged out in 20 seconds.</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button aria-label="Close" variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleStayLoggedIn}>
+          <Button aria-label="Stay Logged In" variant="primary" onClick={handleStayLoggedIn}>
             Stay Logged In
           </Button>
         </Modal.Footer>

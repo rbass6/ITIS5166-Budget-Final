@@ -21,7 +21,7 @@ export default function Navibar({loggedIn, setLoggedIn}) {
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>
-            <i className="bi bi-piggy-bank-fill"></i>
+            <i className="bi bi-piggy-bank-fill" title="Piggy bank"></i>
             BudgetBFF
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -44,7 +44,7 @@ export default function Navibar({loggedIn, setLoggedIn}) {
           {
             loggedIn && (
               <Navbar.Collapse className="justify-content-end">
-                <Button onClick={handleLogout}>Log out</Button>
+                <Button aria-label="Log out" onClick={handleLogout}>Log out</Button>
               </Navbar.Collapse>
             )
           }

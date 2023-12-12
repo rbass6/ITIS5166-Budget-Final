@@ -94,7 +94,7 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
             <Col className="budget-entry-col">
               <Form.Label>Select Budget Entry</Form.Label>
               <Form.Select
-                aria-label="Select Expense Entry"
+                aria-label="Select Budget Entry"
                 value={selectedEntry}
                 onChange={(e) => setSelectedEntry(e.target.value)}
                 size="lg"
@@ -139,8 +139,8 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
             ))
           }
           <div className="expense-button-container">
-            <Button className="expense-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
-            <Button className="expense-add-button" onClick={handleShow}>Add Entry</Button>
+            <Button aria-label="Dashboard" className="expense-dashboard-button" onClick={handleDashboard}>Dashboard</Button>
+            <Button aria-label="Add Entry" className="expense-add-button" onClick={handleShow}>Add Entry</Button>
           </div>
         </Form>
       </Container>
@@ -202,10 +202,10 @@ export default function Expense({ selectedEntry, setSelectedEntry, expenses, ent
               </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button aria-label="Close" variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit">
+            <Button aria-label="Add Expense" variant="primary" type="submit">
               Add Expense
             </Button>
           </Modal.Footer>
