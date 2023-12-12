@@ -10,11 +10,13 @@ import './DashboardHome.css';
 
 export default function DashboardHome({entries, expenses, selectedEntry, setSelectedEntry}) {
   const [selectedEntryName, setSelectedEntryName] = useState("");
+  const [monthlyExpense, setMonthlyExpense] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     getEntryName(entries, selectedEntry);
-  }, [entries, selectedEntry])
+    getExpenseForMonth(expenses);
+  }, [entries, selectedEntry, expenses])
 
   function handleBudget() {
    navigate('/dashboard/budget')
@@ -33,13 +35,27 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
     return transformedEntries
   }
 
-  function getExpensesTotal(expenses) {
-    let totalExpenses = 0
-    expenses.forEach((expense) => {
-      totalExpenses += expense.amount
-    })
-    totalExpenses /= expenses.length
-    return totalExpenses
+  function getExpenseForMonth(expenses) {
+    // let totalExpenses = 0
+    // expenses.forEach((expense) => {
+    //   totalExpenses += expense.amount
+    // })
+    // totalExpenses /= expenses.length
+    // return totalExpenses
+    
+
+    if (expenses.length !== 0) {
+      expenses.forEach((expense) => {
+        console.log("expense year", expense.year)
+        console.log("expense month", expense.month)
+        console.log("current year", new Date().getFullYear())
+        console.log("current month", new Date().getMonth())
+        if (expense.year === new Date().getFullYear() && expense.month === new Date().getMonth()) {
+          console.log("expense amount", expense.amount)
+          setMonthlyExpense(expense.amount)
+        }
+      })
+    }
   }
 
   function getBudgetTotal(entries) {
@@ -90,19 +106,6 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
     return false
   }
 
-  function isEntryDisabled(expenses, selectedEntry) {
-    let count = 0
-    expenses.forEach((expense) => {
-      if (expense.entryId === selectedEntry) {
-        count += 1
-      }
-    })
-    if (count > 0) {
-      return false
-    }
-    return true
-  }
-
   return (
     <div className="dashboard">
       <Container className="dashboard-container">
@@ -137,7 +140,7 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
                 >
                   {
                     entries.map((entry) => (
-                      <option disabled={isEntryDisabled} key={entry._id} value={entry._id}>{entry.title} - ${entry.budget}</option>
+                      <option key={entry._id} value={entry._id}>{entry.title} - ${entry.budget}</option>
                     ))
                   }
                 </Form.Select>
@@ -162,27 +165,36 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
                   />
                 </div>
               </Col>
-              <Col>
-                <h4>{selectedEntryName} Budget vs Expenses Avg %</h4>
-                <div className="gauge-container">
-                  <Chart 
-                    chartType="Gauge"
-                    data={[["Budget Total", "Amount"], [selectedEntryName, getExpensesTotal(expenses) / getBudgetTotal(entries) * 100]]}
-                    width="100%"
-                    height="250px"
-                    className="gauge-chart"
-                    options={{
-                      width: "50%",
-                      height: 250,
-                      redFrom: 90,
-                      redTo: 100,
-                      yellowFrom: 75,
-                      yellowTo: 90,
-                      minorTicks: 5,
-                    }}
-                  />
-                </div>
-              </Col>
+              {
+                monthlyExpense > 0 ? (
+                  <Col>
+                  <h4>{selectedEntryName} Expenses for {new Date().getMonth() + 1}/{new Date().getFullYear()}</h4>
+                  <div className="gauge-container">
+                    <Chart 
+                      chartType="Gauge"
+                      data={[["Budget Total", "Amount"], [selectedEntryName, monthlyExpense / getBudgetTotal(entries) * 100]]}
+                      width="100%"
+                      height="250px"
+                      className="gauge-chart"
+                      options={{
+                        width: "50%",
+                        height: 250,
+                        redFrom: 90,
+                        redTo: 100,
+                        yellowFrom: 75,
+                        yellowTo: 90,
+                        minorTicks: 5,
+                      }}
+                    />
+                  </div>
+                </Col>
+                ) : (
+                  <Col>
+                    <h4>No expense added for this month. Add one to see a chart for expenses this month.</h4>
+                  </Col>
+                )
+              }
+
             </Row>
             <Row className="chart-bottom-row">
               <Col>
