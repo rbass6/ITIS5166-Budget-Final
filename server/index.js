@@ -20,7 +20,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect(`mongodb+srv://doadmin:j0FQB9IE5X7341v8@db-budget-bdd84f18.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-budget`);
+mongoose.connect(process.env.MONGO_URI);
 
 // Middleware
 app.use(compression());
