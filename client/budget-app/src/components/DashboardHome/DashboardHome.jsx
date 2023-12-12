@@ -36,13 +36,6 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
   }
 
   function getExpenseForMonth(expenses) {
-    // let totalExpenses = 0
-    // expenses.forEach((expense) => {
-    //   totalExpenses += expense.amount
-    // })
-    // totalExpenses /= expenses.length
-    // return totalExpenses
-    
 
     if (expenses.length !== 0) {
       expenses.forEach((expense) => {
