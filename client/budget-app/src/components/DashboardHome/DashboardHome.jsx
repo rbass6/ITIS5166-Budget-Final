@@ -90,6 +90,21 @@ export default function DashboardHome({entries, expenses, selectedEntry, setSele
         })
       }
     })
+
+    data.sort((a, b) => {
+
+      let aMonth = parseInt(a[0].split("/")[0])
+      let bMonth = parseInt(b[0].split("/")[0])
+
+      if (aMonth < bMonth) {
+        return 1
+      }
+      if (aMonth > bMonth) {
+        return -1
+      }
+      return 0
+    });
+
     return data
   }
 
